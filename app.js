@@ -16,7 +16,6 @@ const id = []
 function review() {
 
   function managerPrompt() {
-    console.log("Please build your team")
     inquirer.prompt([
       {
         type: "input",
@@ -39,11 +38,11 @@ function review() {
         message: "What is your manager's office number?",
       }
     ]).then(answers => {
-      const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber)
-      team.push(manager)
-      id.push(answers.managerId)
-      teamPrompt()
-    })
+      const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+      team.push(manager);
+      id.push(answers.managerId);
+      teamPrompt();
+    });
   }
 
   function teamPrompt() {
@@ -51,24 +50,24 @@ function review() {
     inquirer.prompt([
       {
         type: "list",
-        name: "memberChoice",
-        message: "Which type of team member would you like to add?",
+        name: "team",
+        message: "Which type of Employee would you like to add?",
         choices: [
-          "Engineer?",
-          "Intern?",
+          "Engineer",
+          "Intern",
           "Done?"
         ]
       }
-    ]).then(userChoice => {
-      switch(userChoice.memberChoice) {
+    ]).then(pick => {
+      switch(pick.team) {
       case "Engineer":
-        engineerPrompt()
+        engineerPrompt();
         break;
       case "Intern":
-        internPrompt()
+        internPrompt();
         break;
       default:
-        teamHtml()
+        teamHtml();
       }
     });
   }
@@ -96,11 +95,11 @@ function review() {
         message: "What is your engineer's GitHub username?",
       }
     ]).then(answers => {
-      const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub)
-      team.push(engineer)
-      id.push(answers.engineerId)
-      teamPrompt()
-    })
+      const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+      team.push(engineer);
+      id.push(answers.engineerId);
+      teamPrompt();
+    });
   }
 
   function internPrompt() {
@@ -126,20 +125,20 @@ function review() {
         message: "What is your intern's school?",
       }
     ]).then(answers => {
-      const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
-      team.push(intern)
-      id.push(answers.internId)
-      teamPrompt()
+      const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+      team.push(intern);
+      id.push(answers.internId);
+      teamPrompt();
     });
   }
 
   function teamHtml() {
-    fs.writeFileSync(outputPath, render(team))
+    fs.writeFileSync(outputPath, render(team));
   }
 
-  managerPrompt()
+  managerPrompt();
 
 }
 
 
-review()
+review();
